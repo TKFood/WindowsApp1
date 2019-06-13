@@ -240,6 +240,7 @@ Public Class PoMo
         Using sb As SolidBrush = New SolidBrush(e.ForeColor)
             e.Graphics.DrawString(MA002, e.Font, sb, r2)
         End Using
+
     End Sub
 
     Private Sub RadioButton1_Click(sender As Object, e As EventArgs) Handles RadioButton1.Click
