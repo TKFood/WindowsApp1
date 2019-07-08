@@ -26,15 +26,17 @@ Partial Class Main
         Me.POS門市ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.門市促銷活動查詢ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.戰情中心ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.門市戰情分析ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.POS門市ToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.POS門市ToolStripMenuItem, Me.戰情中心ToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(800, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1178, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -48,22 +50,35 @@ Partial Class Main
         '門市促銷活動查詢ToolStripMenuItem
         '
         Me.門市促銷活動查詢ToolStripMenuItem.Name = "門市促銷活動查詢ToolStripMenuItem"
-        Me.門市促銷活動查詢ToolStripMenuItem.Size = New System.Drawing.Size(170, 22)
+        Me.門市促銷活動查詢ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.門市促銷活動查詢ToolStripMenuItem.Text = "門市促銷活動查詢"
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 428)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 553)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(800, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1178, 22)
         Me.StatusStrip1.TabIndex = 1
         Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        '戰情中心ToolStripMenuItem
+        '
+        Me.戰情中心ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.門市戰情分析ToolStripMenuItem})
+        Me.戰情中心ToolStripMenuItem.Name = "戰情中心ToolStripMenuItem"
+        Me.戰情中心ToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
+        Me.戰情中心ToolStripMenuItem.Text = "監控室"
+        '
+        '門市戰情分析ToolStripMenuItem
+        '
+        Me.門市戰情分析ToolStripMenuItem.Name = "門市戰情分析ToolStripMenuItem"
+        Me.門市戰情分析ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.門市戰情分析ToolStripMenuItem.Text = "門市戰情分析"
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(1178, 575)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.IsMdiContainer = True
@@ -82,4 +97,6 @@ Partial Class Main
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents POS門市ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 門市促銷活動查詢ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 戰情中心ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 門市戰情分析ToolStripMenuItem As ToolStripMenuItem
 End Class

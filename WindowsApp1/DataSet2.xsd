@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet2" targetNamespace="http://tempuri.org/DataSet2.xsd" xmlns:mstns="http://tempuri.org/DataSet2.xsd" xmlns="http://tempuri.org/DataSet2.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="TKConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="TKConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.TKSRV.My.MySettings.GlobalReference.Default.TKConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataTable2TableAdapter" GeneratorDataComponentClassName="DataTable2TableAdapter" Name="DataTable2" UserDataComponentName="DataTable2TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="TKConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT          POSTB.TB034 AS 活動代號, POSTB.TB036 AS 特價代號, POSTB.TB010 AS 活動品號, INVMB.MB002 AS 商品名稱, 
+                            ATB.門市代號, CASE ATB.銷售總數量 WHEN NULL THEN 0 ELSE ATB.銷售總數量 END AS 銷售總數量, 
+                            CASE ATB.原價銷售總額 WHEN NULL THEN 0 ELSE ATB.原價銷售總額 END AS 原價銷售總額, 
+                            CASE ATB.促銷折價總額 WHEN NULL THEN 0 ELSE ATB.促銷折價總額 END AS 促銷折價總額, 
+                            CASE ATB.促銷銷售總額 WHEN NULL THEN 0 ELSE ATB.促銷銷售總額 END AS 促銷銷售總額, 
+                            CASE JO2.加購數量 WHEN NULL THEN 0 ELSE JO2.加購數量 END AS 加購數量, 
+                            CASE JO2.加購折價金額 WHEN NULL THEN 0 ELSE JO2.加購數量 END AS 加購折價金額, 
+                            CASE JO2.加購銷售總額 WHEN NULL THEN 0 ELSE JO2.加購銷售總額 END AS 加購銷售總額, 
+                            CASE JO1.贈品數量 WHEN NULL THEN 0 ELSE 贈品數量 END AS 贈品數量, CASE JO1.贈品折價金額 WHEN NULL 
+                            THEN 0 ELSE JO1.贈品折價金額 END AS 贈品折價金額
+FROM              POSTB INNER JOIN
+                            INVMB ON POSTB.TB010 = INVMB.MB001 LEFT OUTER JOIN
+                                (SELECT          TB034, TB036, TB049, TB002 AS 門市代號, TB010, CAST(SUM(TB019) AS decimal(7)) AS 銷售總數量, 
+                                                              CAST(SUM(TB018 * TB019) AS decimal(7)) AS 原價銷售總額, CAST(SUM(TB025) AS decimal(7)) 
+                                                              AS 促銷折價總額, CAST(SUM(TB033) AS decimal(7)) AS 促銷銷售總額
+                                  FROM               POSTB AS POSTB_3
+                                  WHERE           (TB042 = '1' OR
+                                                              TB042 = '2') AND (TB049 = '') AND (TB034 = @MTB034) AND (TB036 = @MTB036) AND 
+                                                              (TB001 &gt;= @Sdate) AND (TB001 &lt;= @Edate)
+                                  GROUP BY    TB034, TB036, TB049, TB010, TB002) AS ATB ON POSTB.TB034 = ATB.TB034 AND 
+                            POSTB.TB036 = ATB.TB036 AND POSTB.TB010 = ATB.TB010 LEFT OUTER JOIN
+                                (SELECT          TB034, TB036, TB010, CAST(SUM(TB019) AS decimal(7)) AS 加購數量, SUM(TB033) AS 加購銷售總額, 
+                                                              SUM(TB025) AS 加購折價金額
+                                  FROM               POSTB AS POSTB_2
+                                  WHERE           (TB042 = '1' OR
+                                                              TB042 = '2') AND (TB049 = '2') AND (TB034 = @MTB034) AND (TB036 = @MTB036) AND 
+                                                              (TB001 &gt;= @Sdate) AND (TB001 &lt;= @Edate)
+                                  GROUP BY    TB034, TB036, TB010, TB036) AS JO2 ON POSTB.TB034 = JO2.TB034 AND 
+                            POSTB.TB036 = JO2.TB036 AND POSTB.TB010 = JO2.TB010 LEFT OUTER JOIN
+                                (SELECT          TB034, TB036, TB010, CAST(SUM(TB019) AS decimal(7)) AS 贈品數量, SUM(TB025) 
+                                                              AS 贈品折價金額
+                                  FROM               POSTB AS POSTB_1
+                                  WHERE           (TB042 = '3') AND (TB049 = '1') AND (TB034 = @MTB034) AND (TB036 = @MTB036) AND 
+                                                              (TB001 &gt;= @Sdate) AND (TB001 &lt;= @Edate)
+                                  GROUP BY    TB034, TB036, TB010) AS JO1 ON POSTB.TB034 = JO1.TB034 AND POSTB.TB036 = JO1.TB036 AND 
+                            POSTB.TB010 = JO1.TB010
+WHERE          (POSTB.TB034 = @MTB034) AND (POSTB.TB036 = @MTB036) AND (POSTB.TB001 &gt;= @Sdate) AND 
+                            (POSTB.TB001 &lt;= @Edate)
+GROUP BY   POSTB.TB034, POSTB.TB036, POSTB.TB010, INVMB.MB002, ATB.門市代號, ATB.銷售總數量, ATB.原價銷售總額, 
+                            ATB.促銷折價總額, ATB.促銷銷售總額, JO2.加購數量, JO2.加購折價金額, JO2.加購銷售總額, JO1.贈品數量, 
+                            JO1.贈品折價金額</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MTB034" ColumnName="TB034" DataSourceName="TK.dbo.POSTB" DataTypeServer="nvarchar(10)" DbType="String" Direction="Input" ParameterName="@MTB034" Precision="0" ProviderType="NVarChar" Scale="0" Size="10" SourceColumn="活動代號" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MTB036" ColumnName="TB036" DataSourceName="TK.dbo.POSTB" DataTypeServer="nvarchar(12)" DbType="String" Direction="Input" ParameterName="@MTB036" Precision="0" ProviderType="NVarChar" Scale="0" Size="12" SourceColumn="特價代號" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Sdate" ColumnName="TB001" DataSourceName="TK.dbo.POSTB" DataTypeServer="nchar(8)" DbType="String" Direction="Input" ParameterName="@Sdate" Precision="0" ProviderType="NChar" Scale="0" Size="8" SourceColumn="TB001" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Edate" ColumnName="TB001" DataSourceName="TK.dbo.POSTB" DataTypeServer="nchar(8)" DbType="String" Direction="Input" ParameterName="@Edate" Precision="0" ProviderType="NChar" Scale="0" Size="8" SourceColumn="TB001" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="活動代號" DataSetColumn="活動代號" />
+              <Mapping SourceColumn="特價代號" DataSetColumn="特價代號" />
+              <Mapping SourceColumn="活動品號" DataSetColumn="活動品號" />
+              <Mapping SourceColumn="商品名稱" DataSetColumn="商品名稱" />
+              <Mapping SourceColumn="加購折價金額" DataSetColumn="加購折價金額" />
+              <Mapping SourceColumn="加購銷售總額" DataSetColumn="加購銷售總額" />
+              <Mapping SourceColumn="贈品折價金額" DataSetColumn="贈品折價金額" />
+              <Mapping SourceColumn="銷售總數量" DataSetColumn="銷售總數量" />
+              <Mapping SourceColumn="原價銷售總額" DataSetColumn="原價銷售總額" />
+              <Mapping SourceColumn="促銷折價總額" DataSetColumn="促銷折價總額" />
+              <Mapping SourceColumn="促銷銷售總額" DataSetColumn="促銷銷售總額" />
+              <Mapping SourceColumn="加購數量" DataSetColumn="加購數量" />
+              <Mapping SourceColumn="贈品數量" DataSetColumn="贈品數量" />
+              <Mapping SourceColumn="門市代號" DataSetColumn="門市代號" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet2" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet2" msprop:Generator_UserDSName="DataSet2">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable2" msprop:Generator_TableClassName="DataTable2DataTable" msprop:Generator_TableVarName="tableDataTable2" msprop:Generator_TablePropName="DataTable2" msprop:Generator_RowDeletingName="DataTable2RowDeleting" msprop:Generator_RowChangingName="DataTable2RowChanging" msprop:Generator_RowEvHandlerName="DataTable2RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable2RowDeleted" msprop:Generator_UserTableName="DataTable2" msprop:Generator_RowChangedName="DataTable2RowChanged" msprop:Generator_RowEvArgName="DataTable2RowChangeEvent" msprop:Generator_RowClassName="DataTable2Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="活動代號" msprop:Generator_ColumnVarNameInTable="column活動代號" msprop:Generator_ColumnPropNameInRow="活動代號" msprop:Generator_ColumnPropNameInTable="活動代號Column" msprop:Generator_UserColumnName="活動代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="特價代號" msprop:Generator_ColumnVarNameInTable="column特價代號" msprop:Generator_ColumnPropNameInRow="特價代號" msprop:Generator_ColumnPropNameInTable="特價代號Column" msprop:Generator_UserColumnName="特價代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="12" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="活動品號" msprop:Generator_ColumnVarNameInTable="column活動品號" msprop:Generator_ColumnPropNameInRow="活動品號" msprop:Generator_ColumnPropNameInTable="活動品號Column" msprop:Generator_UserColumnName="活動品號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="40" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="商品名稱" msprop:Generator_ColumnVarNameInTable="column商品名稱" msprop:Generator_ColumnPropNameInRow="商品名稱" msprop:Generator_ColumnPropNameInTable="商品名稱Column" msprop:Generator_UserColumnName="商品名稱" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="60" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="加購折價金額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column加購折價金額" msprop:Generator_ColumnPropNameInRow="加購折價金額" msprop:Generator_ColumnPropNameInTable="加購折價金額Column" msprop:Generator_UserColumnName="加購折價金額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="加購銷售總額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column加購銷售總額" msprop:Generator_ColumnPropNameInRow="加購銷售總額" msprop:Generator_ColumnPropNameInTable="加購銷售總額Column" msprop:Generator_UserColumnName="加購銷售總額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="贈品折價金額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column贈品折價金額" msprop:Generator_ColumnPropNameInRow="贈品折價金額" msprop:Generator_ColumnPropNameInTable="贈品折價金額Column" msprop:Generator_UserColumnName="贈品折價金額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="銷售總數量" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column銷售總數量" msprop:Generator_ColumnPropNameInRow="銷售總數量" msprop:Generator_ColumnPropNameInTable="銷售總數量Column" msprop:Generator_UserColumnName="銷售總數量" type="xs:decimal" minOccurs="0" />
+              <xs:element name="原價銷售總額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column原價銷售總額" msprop:Generator_ColumnPropNameInRow="原價銷售總額" msprop:Generator_ColumnPropNameInTable="原價銷售總額Column" msprop:Generator_UserColumnName="原價銷售總額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="促銷折價總額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column促銷折價總額" msprop:Generator_ColumnPropNameInRow="促銷折價總額" msprop:Generator_ColumnPropNameInTable="促銷折價總額Column" msprop:Generator_UserColumnName="促銷折價總額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="促銷銷售總額" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column促銷銷售總額" msprop:Generator_ColumnPropNameInRow="促銷銷售總額" msprop:Generator_ColumnPropNameInTable="促銷銷售總額Column" msprop:Generator_UserColumnName="促銷銷售總額" type="xs:decimal" minOccurs="0" />
+              <xs:element name="加購數量" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column加購數量" msprop:Generator_ColumnPropNameInRow="加購數量" msprop:Generator_ColumnPropNameInTable="加購數量Column" msprop:Generator_UserColumnName="加購數量" type="xs:decimal" minOccurs="0" />
+              <xs:element name="贈品數量" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="column贈品數量" msprop:Generator_ColumnPropNameInRow="贈品數量" msprop:Generator_ColumnPropNameInTable="贈品數量Column" msprop:Generator_UserColumnName="贈品數量" type="xs:decimal" minOccurs="0" />
+              <xs:element name="門市代號" msprop:Generator_ColumnVarNameInTable="column門市代號" msprop:Generator_ColumnPropNameInRow="門市代號" msprop:Generator_ColumnPropNameInTable="門市代號Column" msprop:Generator_UserColumnName="門市代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="11" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
